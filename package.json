@@ -18,6 +18,7 @@
   "homepage": "https://github.com/katyjustiss/ghpages-workflow#readme",
   "devDependencies": {
     "babel": "^5.3.1",
+    "bowcat": "0.0.4",
     "jade": "^1.9.2",
     "node-sass": "^3.1.0"
   }
