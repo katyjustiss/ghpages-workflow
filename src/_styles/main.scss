@@ -1,3 +1,9 @@
-h5 {
-  color: brown;
-}
+@import "variables";
+
+@import "layout";
+@import "header";
+@import "footer";
+
+@import "index";
+@import "shop";
+

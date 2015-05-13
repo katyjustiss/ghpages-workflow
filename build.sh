@@ -9,4 +9,16 @@ mkdir public
 cd src
 find . -name "*.html" | cpio -pdvm ../public
 cd ..
-rm -rf src/**/*.html public/**/_*.html public/_partials
+rm -rf src/*.html \
+  src/**/*.html \
+  public/**/_*.html \
+  public/_partials
+
+# compile sass to css
+./node_modules/.bin/node-sass \
+  --output-style compressed \
+  --source-map-embed \
+  src/_styles/main.scss public/css/main.css
+
+
+
