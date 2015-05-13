@@ -1,0 +1,19 @@
+{
+  "name": "ghpages-workflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katyjustiss/ghpages-workflow.git"
+  },
+  "author": "Katy Justiss <katy.justiss@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/katyjustiss/ghpages-workflow/issues"
+  },
+  "homepage": "https://github.com/katyjustiss/ghpages-workflow#readme"
+}

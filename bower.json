@@ -1,0 +1,17 @@
+{
+  "name": "ghpages-workflow",
+  "version": "1.0.0",
+  "homepage": "https://github.com/katyjustiss/ghpages-workflow",
+  "authors": [
+    "Katy Justiss <katy.justiss@gmail.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
