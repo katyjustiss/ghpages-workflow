@@ -1,10 +1,12 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
+var deploy      = require('gulp-gh-pages');
 var runSequence = require('run-sequence');
 var $ = require('gulp-load-plugins')({
-      pattern: ['gulp-*', 'autoprefixer', 'concat', 'del', 'main-bower-files', 'sourcemaps']
+      pattern: ['gulp-*', 'copy', 'concat', 'del', 'main-bower-files']
     });
 
+///////////BABEL//////////////////
 gulp.task('babel:dev', function () {
   return gulp
     .src('src/js/*.js')
@@ -23,6 +25,7 @@ gulp.task('babel:prod', function () {
     .pipe(gulp.dest('public/js'))
 });
 
+//////////////BOWER///////////////
 gulp.task('bower', function() {
   return gulp
     .src($.mainBowerFiles('**/*.js'))
@@ -30,10 +33,24 @@ gulp.task('bower', function() {
     .pipe(gulp.dest('public/lib'))
 })
 
+/////////////CLEAN//////////////////
 gulp.task('clean', function () {
    $.del('public')
 })
 
+///////////////COPY////////////////// trying to copy CNAME
+// gulp.task('copy', function () {
+//   gulp.src(['/src/CNAME'])
+//   .pipe(gulp.dest('./public/'))
+// });
+
+/////////////DEPLOY/////////////////
+gulp.task('deploy', function () {
+  return gulp.src("./public/**/*")
+    .pipe(deploy())
+});
+
+///////////////JADE////////////////
 gulp.task('jade:dev', function () {
   return gulp
     .src(['src/**/*.jade', '!src/**/_*.jade'])
@@ -50,6 +67,7 @@ gulp.task('jade:prod', function () {
     .pipe(gulp.dest('public'));
 });
 
+///////////////SASS///////////////////
 gulp.task('sass:dev', function () {
   return gulp
     .src('src/_styles/main.scss')
@@ -74,14 +92,13 @@ gulp.task('sass:prod', function () {
     .pipe(browserSync.stream())
 });
 
+///////////////UGLIFY OR COMPRESS////////////////
 gulp.task('compress', function() { //not working.
   return gulp.src('public/lib/*.js')
     .pipe($.uglify())
     .pipe(gulp.dest('public/lib'));
 });
 
-// gulp.task('build:prod', ['clean', 'jade:prod', 'sass:prod', 'bower', 'serve']);
-// gulp.task('build:dev', ['clean', 'jade:dev', 'sass:dev', 'bower', 'serve']);
 
 //trying the runsequence for dev
 gulp.task('build:dev', ['clean'], function(callback) {
@@ -96,6 +113,8 @@ gulp.task('build:dev', ['clean'], function(callback) {
       ],
         callback);
 });
+
+gulp.task('build', ['clean', 'jade:dev', 'sass:dev', 'babel:dev', 'bower'])
 
 gulp.task('build:prod', ['clean'], function(callback) {
   runSequence([
