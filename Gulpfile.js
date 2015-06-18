@@ -3,35 +3,39 @@ var browserSync = require('browser-sync').create();
 var deploy      = require('gulp-gh-pages');
 var runSequence = require('run-sequence');
 var $ = require('gulp-load-plugins')({
-      pattern: ['gulp-*', 'copy', 'concat', 'del', 'main-bower-files']
+      pattern: ['gulp-*', 'copy', 'del', 'main-bower-files']
     });
 
 ///////////BABEL//////////////////
-gulp.task('babel:dev', function () {
+gulp.task('js:dev', function () {
   return gulp
     .src('src/js/*.js')
     .pipe($.sourcemaps.init())
     .pipe($.babel())
-    .pipe($.concat('all.js'))
+    .pipe($.concat('main.js'))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('babel:prod', function () {
+gulp.task('js:prod', function () {
   return gulp
     .src('src/**/*.js')
     .pipe($.babel())
-    .pipe($.concat('all.js'))
+    .pipe($.concat('main.js'))
     .pipe(gulp.dest('public/js'))
 });
 
 //////////////BOWER///////////////
 gulp.task('bower', function() {
-  return gulp
+  gulp
     .src($.mainBowerFiles('**/*.js'))
     .pipe($.concat('build.js'))
-    .pipe(gulp.dest('public/lib'))
-})
+    .pipe(gulp.dest('public/lib'));
+  gulp
+    .src($.mainBowerFiles('**/*.css'))
+    .pipe($.concat('build.css'))
+    .pipe(gulp.dest('public/lib'));
+  })
 
 /////////////CLEAN//////////////////
 gulp.task('clean', function () {
@@ -105,7 +109,7 @@ gulp.task('build:dev', ['clean'], function(callback) {
   runSequence([
         'jade:dev',
         'sass:dev',
-        'babel:dev',
+        'js:dev',
         'bower'
       ],
       [
@@ -114,13 +118,13 @@ gulp.task('build:dev', ['clean'], function(callback) {
         callback);
 });
 
-gulp.task('build', ['clean', 'jade:dev', 'sass:dev', 'babel:dev', 'bower'])
+gulp.task('build', ['clean', 'jade:dev', 'sass:dev', 'js:dev', 'bower'])
 
 gulp.task('build:prod', ['clean'], function(callback) {
   runSequence([
         'jade:prod',
         'sass:prod',
-        'babel:prod',
+        'js:prod',
         'bower'
       ],
       [
@@ -141,7 +145,7 @@ gulp.task('serve', function () {
     });
   gulp.watch(['src/**/*.jade'], ['jade:dev'])
   gulp.watch(['src/**/*.scss'], ['sass:dev'])
-  gulp.watch(['src/**/*.js'], ['babel:dev'])
+  gulp.watch(['src/**/*.js'], ['js:dev'])
   gulp.watch(['public/*.html', 'public/*.css', 'public/js/*.js']).on('change', browserSync.reload);
 });
 
