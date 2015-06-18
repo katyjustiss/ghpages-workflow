@@ -35,7 +35,7 @@ gulp.task('bower', function() {
     .src($.mainBowerFiles('**/*.css'))
     .pipe($.concat('build.css'))
     .pipe(gulp.dest('public/lib'));
-  })
+})
 
 /////////////CLEAN//////////////////
 gulp.task('clean', function () {
@@ -43,10 +43,10 @@ gulp.task('clean', function () {
 })
 
 ///////////////COPY////////////////// trying to copy CNAME
-// gulp.task('copy', function () {
-//   gulp.src(['/src/CNAME'])
-//   .pipe(gulp.dest('./public/'))
-// });
+gulp.task('copy', function () {
+  gulp.src(['src/CNAME'])
+  .pipe(gulp.dest('public/'))
+});
 
 /////////////DEPLOY/////////////////
 gulp.task('deploy', function () {
